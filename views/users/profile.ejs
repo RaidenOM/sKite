@@ -1,0 +1,87 @@
+<%- layout('layouts/boilerplate') %>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-info text-white text-center">
+                    <h2 class="mb-0">User Profile</h2>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Profile Picture -->
+                    <div class="text-center mb-4">
+                        <img src="<%= userDetails.userId.profilePicture %>" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                    </div>
+
+                    <h3 class="card-title text-center mb-4"><%= userDetails.userId.username %></h3>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>Email:</strong>
+                            <span class="text-muted"><%= userDetails.userId.email %></span>
+                        </li>
+
+                        <% if (userDetails.userId.role === 'Author') { %>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Bio:</strong>
+                                <span class="text-muted"><%= userDetails.bio %></span>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Posts Count:</strong>
+                                <span class="text-muted"><%= userDetails.postsCount %></span>
+                            </li>
+
+                            <% if (userDetails.genres && userDetails.genres.length > 0) { %>
+                                <li class="list-group-item">
+                                    <strong>Genres:</strong>
+                                    <ul>
+                                        <% userDetails.genres.forEach(genre => { %>
+                                            <li class="text-muted"><%= genre %></li>
+                                        <% }); %>
+                                    </ul>
+                                </li>
+                            <% } %>
+
+                        <% } else if (userDetails.userId.role === 'Admin') { %>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Admin Actions:</strong>
+                                <span class="text-muted">You have administrative privileges.</span>
+                            </li>
+
+                        <% } else if (userDetails.userId.role === 'Reader') { %>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Favorite Posts:</strong>
+                                <span class="text-muted">You can save your favorite posts here.</span>
+                            </li>
+                        <% } %>
+                    </ul>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <a href="/posts" class="btn btn-primary btn-lg">Back to Posts</a>
+                        <form action="/profile?_method=DELETE" method="post">
+                            <button class="btn btn-danger btn-lg w-100">Delete profile</a>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background color */
+    }
+    .card {
+        border-radius: 10px; /* Rounded corners for card */
+    }
+    .card-header {
+        background-color: #17a2b8; /* Bootstrap info color */
+        color: white;
+    }
+    .text-muted {
+        color: #6c757d; /* Muted text color */
+    }
+</style>

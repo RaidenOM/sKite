@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Clean Blog - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version) -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap) -->
+    <link href="/stylesheets/home/styles.css" rel="stylesheet" />
+</head>
+<body style="font-family: 'Poppins', sans-serif !important;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <!-- First Group: Brand Name -->
+            <a class="navbar-brand" href="/">sKite</a>
+
+            <!-- Toggle button for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Second Group: Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mx-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/posts">All Posts</a></li>
+                    <% if (currentUser) { %>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/posts/new">New Post</a></li>
+                    <% } %>
+                </ul>
+
+                <!-- Third Group: Authentication Links -->
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <% if (!currentUser) { %>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/register">Register</a></li>
+                    <% } else { %>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/profile">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead" style="background-image: url('/images/home/home-bg.jpg'); height: 500px;">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Welcome to the Blog</h1>
+                        <span class="subheading">Explore great content</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+
+            <!-- Display Recent Posts -->
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <% posts.forEach(post => { %>
+                    <div class="post-preview">
+                        <a href="/posts/<%= post._id %>">
+                            <h2 class="post-title"><%= post.title %></h2>
+                            <h3 class="post-subtitle"><%- post.content.substring(0, 100) %>...</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by <%= post.author.name %> on <%= post.createdAt.toDateString() %>
+                        </p>
+                    </div>
+                    <!-- Divider -->
+                    <hr class="my-4" />
+                <% }) %>
+
+                <!-- Button to view all posts -->
+                <div class="d-flex justify-content-end mb-4">
+                    <a class="btn btn-primary text-uppercase" href="/posts">View All Posts →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-top py-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+                    <div class="small text-muted">Copyright &copy; <strong>sKite</strong> 2024</div>
+                    <div class="small text-muted">Designed by <a href="https://github.com/RaidenOM"><strong>Om Kumar</strong></a></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap CDN for JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/javascripts/home/scripts.js"></script>
+</body>
+</html>

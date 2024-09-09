@@ -1,0 +1,143 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('<%= post.image %>'); height: 500px;">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>
+                            <%= post.title %>
+                        </h1>
+                        <span class="meta mt-5">
+                            Posted by <%= post.author.name %> on <%= post.createdAt.toDateString() %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-content mb-4" style="min-height: 200px;">
+                        <%- post.content %>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="mt-5 py-5">
+                        <h2 class="mb-4">Comments</h2>
+
+                        <!-- Comment Form -->
+                        <form action="/posts/<%= post._id %>/comments" method="POST" class="mb-4">
+                            <div class="mb-3">
+                                <textarea class="form-control" name="comment[comment]" rows="3" required
+                                    placeholder="Add a comment..." style="border-radius: 8px; resize: none;"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-start rounded-end">
+                                    <i class="fas fa-comments"></i>
+                                    Add comment
+                                </button>
+                            </div>
+                        </form>
+
+                        <hr>
+
+                        <!-- Display Comments -->
+                        <div class="comments-list mt-3">
+                            <% if (post.comments && post.comments.length > 0) { %>
+                                <% post.comments.forEach(comment => { %>
+                                    <div class="mb-3 card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= comment.name %>
+                                            </h5>
+                                            <p class="text-muted small"
+                                                style="font-size: 0.85rem; margin-bottom: 1rem;">
+                                                Posted on: <%= new Date(comment.createdAt).toLocaleString() %>
+                                            </p>
+                                            <p class="card-text">
+                                                <%= comment.comment %>
+                                            </p>
+                                            <% if (currentUser && comment.userId.equals(currentUser._id)) { %>
+                                                <form action="/posts/<%= post.id %>/comments/<%= comment.id %>?_method=DELETE"
+                                                    method="post" class="d-inline">
+                                                    <button class="text-danger" style="background: none; border: none;">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p class="text-muted">No comments yet. Be the first to comment!</p>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Post Management Icons -->
+                    <% if(currentUser && ((currentUser.role === 'Author' && post.author.userId.equals(currentUser.id)) || currentUser.role === 'Admin')) { %>
+                        <div class="mt-5 d-flex justify-content-between">
+                            <a href="/posts/<%= post._id %>/edit" class="text-warning">
+                                <i class="fas fa-edit"></i>
+                                Edit post
+                            </a>
+                            <form action="/posts/<%= post._id %>?_method=DELETE" method="POST" class="d-inline">
+                                <button type="submit" class="text-danger" style="background: none; border: none;">
+                                    <i class="fas fa-trash"></i>
+                                    Delete post
+                                </button>
+                            </form>
+                            <a href="/posts" class="text-secondary">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer-->
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#!">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#!">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#!">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
+                </div>
+            </div>
+        </div>
+    </footer>
