@@ -23,12 +23,14 @@ const { storage } = require('./cloudinary/index')
 const upload = multer({ storage })
 const catchAsync = require('./utilities/catchAsync')
 const ExpressError = require('./utilities/ExpressError')
-const { isLoggedIn, isPostOwner, isCommentOwner, isAuthor, validatePost, validateComment } = require('./middleware')
+const { isLoggedIn, isPostOwner, isCommentOwner, isAuthor, isAuthorOrAdmin, validatePost, validateComment } = require('./middleware')
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/skite'
+const PORT = process.env.PORT || 3000;
 
 
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/skite')
+mongoose.connect(dbUrl)
 .then(() => {
     console.log('Connected to database')
 })
@@ -38,7 +40,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/skite')
 
 
 const store = MongoStore.create({
-    mongoUrl: 'mongodb://127.0.0.1:27017/skite',
+    mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: 'thisshouldbeabettersecret!'
@@ -189,9 +191,41 @@ app.delete('/profile', isLoggedIn, catchAsync(async (req, res) => {
 
 //BLOG ROUTS
 app.get('/posts', catchAsync(async (req, res) => {
-    const posts = await Post.find({}).populate('author')
-    res.render('posts/listPosts', { posts })
-}))
+    const { category, sort, publishedAt } = req.query;
+    
+    let query
+
+    if(category) {
+        query = Post.find({categories: category})
+    }else {
+        query = Post.find()
+    }
+
+    // Add date filtering
+    if (publishedAt) {
+        const dateLimit = new Date();
+        dateLimit.setMonth(dateLimit.getMonth() - publishedAt);
+        query = query.where('createdAt').gte(dateLimit);
+    }
+
+    // Add sorting
+    if (sort) {
+        if (sort === 'latest') {
+            query = query.sort({ createdAt: -1 });
+        } else if (sort === 'oldest') {
+            query = query.sort({ createdAt: 1 });
+        } else if (sort === 'most_comments') {
+            query = query.sort({ comments: -1 });
+        }
+    } else {
+        query = query.sort({ createdAt: -1 }); // Default to latest
+    }
+
+    const posts = await query.populate('author');
+
+    res.render('posts/listPosts', { posts, selectedCategory: category, selectedSort: sort, selectedPublishedAt: publishedAt });
+}));
+
 
 app.get('/posts/new', isLoggedIn, isAuthor, (req, res) => {
     res.render('posts/createPost')
@@ -255,9 +289,9 @@ app.post('/posts', isLoggedIn, isAuthor, upload.single('post[image]'), validateP
     res.redirect('/posts')
 }))
 
-app.put('/posts/:id', isLoggedIn, isAuthor, isPostOwner, upload.single('post[image]'), validatePost, catchAsync(async (req, res) => {
+app.put('/posts/:id', isLoggedIn, isAuthorOrAdmin, isPostOwner, upload.single('post[image]'), validatePost, catchAsync(async (req, res) => {
     const { id } = req.params
-    const { title, content, categories } = req.body
+    const { title, content, categories } = req.body.post
     const author = await Author.findOne({userId: req.user.id})
 
     const updatedData = {title, content, categories}
@@ -283,7 +317,7 @@ app.put('/posts/:id', isLoggedIn, isAuthor, isPostOwner, upload.single('post[ima
     res.redirect(`/posts/${id}`)
 }))
 
-app.delete('/posts/:id', isLoggedIn, isAuthor, isPostOwner, catchAsync(async (req, res) => {
+app.delete('/posts/:id', isLoggedIn, isAuthorOrAdmin, isPostOwner, catchAsync(async (req, res) => {
     const { id } = req.params
     await Post.findByIdAndDelete(id)
 
@@ -292,7 +326,7 @@ app.delete('/posts/:id', isLoggedIn, isAuthor, isPostOwner, catchAsync(async (re
 }))
 
 //COMMENTS ROUTES
-app.post('/posts/:id/comments', isLoggedIn, validateComment, catchAsync(async (req, res) => {
+app.post('/posts/:id/comments', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params
     const { comment } = req.body.comment
 
@@ -327,6 +361,4 @@ app.use((err, req, res, next) => {
     res.status(status).render('error', { err })
 })
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000')
-})
+module.exports = app;

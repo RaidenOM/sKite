@@ -1,5 +1,97 @@
-<footer class="footer bg-dark py-3 mt-auto" style="font-size: 1rem;">
-    <div class="container">
-        <span class="text-light">&copy; sKite</span>
+<!-- Footer -->
+<footer class="text-center text-lg-start text-white mt- pt-0 pb-0" style="background-color: #1c2331; font-size: 1rem !important;">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-between p-4" style="background-color: #6351ce;">
+        <!-- Left -->
+        <div class="me-5">
+            <span>Get connected with us on social networks:</span>
+        </div>
+        <!-- Right -->
+        <div>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" class="text-white me-4 text-decoration-none">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section: Links -->
+    <section>
+        <div class="container text-center text-md-start mt-5">
+            <div class="row mt-3">
+                <!-- Company name -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold">sKite</h6>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px; background-color: #7c4dff; height: 2px" />
+                    <p>Your go-to platform for great blogs and inspiring content. Connect, create, and engage with the community.</p>
+                </div>
+
+                <!-- Products -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold">Products</h6>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px; background-color: #7c4dff; height: 2px" />
+                    <p><a href="/alumni" class="text-white text-decoration-none">Alumni Network</a></p>
+                    <p><a href="/jobs" class="text-white text-decoration-none">Job Board</a></p>
+                    <p><a href="/events" class="text-white text-decoration-none">Event Management</a></p>
+                    <p><a href="#" class="text-white text-decoration-none">Donation Platform</a></p>
+                    <p><a href="/testimonial" class="text-white text-decoration-none">Testimonials</a></p>
+                </div>
+
+                <!-- Useful links -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold">Useful links</h6>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px; background-color: #7c4dff; height: 2px" />
+                    <p>
+                        <% if(currentUser) { %>
+                            <a href="/profile" class="text-white text-decoration-none">Your Account</a>
+                        <% }else { %>
+                            <a href="/login" class="text-white text-decoration-none">Login</a>
+                        <% } %>
+                    </p>
+                    <p>
+                        <% if(!currentUser) { %>
+                            <a href="/register" class="text-white text-decoration-none">Register</a>
+                        <% }else if(currentUser.role==='staff' ) { %>
+                            <a href="/alumni/new" class="text-white text-decoration-none">Alumni Registration</a>
+                        <% } %>
+                    </p>
+                    <p><a href="#!" class="text-white text-decoration-none">Help Center</a></p>
+                    <p><a href="#!" class="text-white text-decoration-none">Event Calendar</a></p>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <h6 class="text-uppercase fw-bold">Contact</h6>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                        style="width: 60px; background-color: #7c4dff; height: 2px" />
+                    <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                    <p><i class="fas fa-envelope mr-3"></i> info@skite.com</p>
+                    <p><i class="fas fa-phone mr-3"></i> +1 234 567 88</p>
+                    <p><i class="fas fa-print mr-3"></i> +1 234 567 89</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        &copy; <%= new Date().getFullYear() %> sKite. All Rights Reserved.
     </div>
 </footer>

@@ -36,10 +36,12 @@
     </style>
 </head>
 
-<body class="d-flex flex-column" style="font-family: 'Poppins', sans-serif !important;">
+<body class="d-flex flex-column vh-100" style="font-family: 'Poppins', sans-serif !important">
     <%- include('../partials/navbar') %>
-        <%- include('../partials/flash') %>
-        <%- body %>
+        <main class="mb-5">
+            <%- include('../partials/flash') %>
+            <%- body %>
+        </main>
 
     <%- include('../partials/footer') %>
     
@@ -49,13 +51,25 @@
 
     <script>
         window.onload = function() {
-          // Get all buttons with the class .btn
           var buttons = document.querySelectorAll('.btn');
-    
-          // Loop through each button and add the rounded-start and rounded-end classes
           buttons.forEach(function(button) {
             button.classList.add('rounded-start', 'rounded-end');
           });
+
+          const formControls = document.querySelectorAll('.form-control')
+          for(let formControl of formControls) {
+            formControl.classList.add('rounded-start', 'rounded-end')
+          }
+
+          const formSelects = document.querySelectorAll('.form-select')
+          for(let formSelect of formSelects) {
+            formSelect.classList.add('rounded-start', 'rounded-end')
+          }
+          
+          const cards = document.querySelectorAll('.card')
+          for(let card of cards) {
+            card.classList.add('rounded-start', 'rounded-end')
+          }
         };
       </script>
 </body>

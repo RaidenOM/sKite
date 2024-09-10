@@ -17,14 +17,14 @@
                     <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                         <div class="form-group mb-3">
                             <label for="title" class="form-label">Post Title</label>
-                            <input class="form-control" type="text" name="title" id="title" value="<%= post.title %>" required>
+                            <input class="form-control" type="text" name="post[title]" id="title" value="<%= post.title %>" required>
                             <div class="invalid-feedback">Please enter a title.</div>
                         </div>
 
                         <div class="form-group mb-3">
                             <label class="form-label" for="content">Post Content</label>
                             <div id="editor" class="quill-editor"></div>
-                            <input type="hidden" name="content" id="content" required>
+                            <input type="hidden" name="post[content]" id="content" value="<%= post.content %>" required>
                             <div class="invalid-feedback">Please enter content for your post.</div>
                         </div>
 
@@ -42,49 +42,48 @@
                             <label class="form-label">Select Categories:</label>
                             <div>
                                 <% const selectedCategories = post.categories || []; %>
-                                <!-- Reuse the same category checkboxes as in createPost.ejs -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Technology" id="category-technology" <%= selectedCategories.includes('Technology') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Technology" id="category-technology" <%= selectedCategories.includes('Technology') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-technology">Technology</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Lifestyle" id="category-lifestyle" <%= selectedCategories.includes('Lifestyle') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Lifestyle" id="category-lifestyle" <%= selectedCategories.includes('Lifestyle') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-lifestyle">Lifestyle</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Education" id="category-education" <%= selectedCategories.includes('Education') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Education" id="category-education" <%= selectedCategories.includes('Education') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-education">Education</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Entertainment" id="category-entertainment" <%= selectedCategories.includes('Entertainment') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Entertainment" id="category-entertainment" <%= selectedCategories.includes('Entertainment') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-entertainment">Entertainment</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Travel" id="category-travel" <%= selectedCategories.includes('Travel') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Travel" id="category-travel" <%= selectedCategories.includes('Travel') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-travel">Travel</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Business" id="category-business" <%= selectedCategories.includes('Business') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Business" id="category-business" <%= selectedCategories.includes('Business') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-business">Business</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Food" id="category-food" <%= selectedCategories.includes('Food') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Food" id="category-food" <%= selectedCategories.includes('Food') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-food">Food</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Gaming" id="category-gaming" <%= selectedCategories.includes('Gaming') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Gaming" id="category-gaming" <%= selectedCategories.includes('Gaming') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-gaming">Gaming</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Fashion" id="category-fashion" <%= selectedCategories.includes('Fashion') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Fashion" id="category-fashion" <%= selectedCategories.includes('Fashion') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-fashion">Fashion</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Home and Garden" id="category-home-garden" <%= selectedCategories.includes('Home and Garden') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Home and Garden" id="category-home-garden" <%= selectedCategories.includes('Home and Garden') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-home-garden">Home and Garden</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="categories[]" value="Other" id="category-other" <%= selectedCategories.includes('Other') ? 'checked' : '' %>>
+                                    <input class="form-check-input" type="checkbox" name="post[categories][]" value="Other" id="category-other" <%= selectedCategories.includes('Other') ? 'checked' : '' %>>
                                     <label class="form-check-label" for="category-other">Other</label>
                                 </div>
                             </div>
@@ -118,7 +117,7 @@
     });
 
     // Set the content of the Quill editor to the existing post content
-    quill.root.innerHTML = '<%- post.content %>'; // Ensure proper HTML escaping
+    quill.root.innerHTML = "<%- post.content %>"; // Ensure proper HTML escaping
 
     // Handle form submission
     const form = document.querySelector('form');

@@ -15,7 +15,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     next()
 }
 
-module.exports.isAuthor = (req, res, next) => {
+module.exports.isAuthorOrAdmin = (req, res, next) => {
     if (req.user.role === 'Admin') next()
     else {
         if (req.user.role !== 'Author') {
@@ -24,6 +24,14 @@ module.exports.isAuthor = (req, res, next) => {
         }
         next()
     }
+}
+
+module.exports.isAuthor = (req, res, next) => {
+    if (req.user.role !== 'Author') {
+        req.flash('error', 'You do not have permissions to do this')
+        res.redirect(req.originalUrl)
+    }
+    next()
 }
 
 module.exports.isPostOwner = async (req, res, next) => {
@@ -58,7 +66,11 @@ module.exports.validatePost = (req, res, next) => {
     const postSchema = Joi.object({
         post: Joi.object({
             title: Joi.string().required(),
-            content: Joi.string().required()
+            content: Joi.string().required(),
+            categories: Joi.array().items(Joi.string()).optional(),
+            image: Joi.string().optional(),
+            comments: Joi.array().items(Joi.string()).optional(),
+            createdAt: Joi.date().optional()
         }).required()
     }).required()
 

@@ -1,97 +1,118 @@
-<%- layout('layouts/boilerplate') %>
+<% layout('layouts/boilerplate') %>
 
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="row">
-        <div class="col-md-4 offset-md-4">
-            <div class="card shadow">
-                <img src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title"><strong>Register</strong></h5>
-                    <form action="/register" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+<!-- Section: Design Block -->
+<section class="text-center">
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
+        background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
+        height: 300px;
+        background-size: cover;
+        background-position: center
+        "></div>
+  <!-- Background image -->
 
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Username </label>
-                            <input class="form-control" type="text" name="username" id="username" required>
-                            <div class="valid-feedback">Looks good!</div>
-                        </div>
+  <div class="card mx-4 mx-md-5 shadow-5-strong bg-body-tertiary" style="
+        margin-top: -100px;
+        backdrop-filter: blur(30px);
+        ">
+    <div class="card-body py-5 px-md-5">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5">Create Your Account</h2>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Email </label>
-                            <input class="form-control" type="email" name="email" id="email" required>
-                            <div class="valid-feedback">Looks good!</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Password </label>
-                            <input class="form-control" type="password" name="password" id="password" required>
-                            <div class="valid-feedback">Looks good!</div>
-                        </div>
-
-                        <!-- Profile Picture Input -->
-                        <div class="mb-3">
-                            <label class="form-label" for="profilePicture">Profile Picture </label>
-                            <input class="form-control" type="file" name="profilePicture" id="profilePicture" accept="image/*">
-                        </div>
-
-                        <!-- Role Selection -->
-                        <div class="mb-3">
-                            <label class="form-label" for="role">Role </label>
-                            <select class="form-select" name="role" id="role" onchange="showRoleFields()" required>
-                                <option value="" disabled selected>Select Role</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Author">Author</option>
-                                <option value="Reader">Reader</option>
-                            </select>
-                        </div>
-
-                        <!-- Additional fields for Author -->
-                        <div id="authorFields" class="additional-fields" style="display:none;">
-                            <div class="mb-3">
-                                <label class="form-label" for="authorName">Author Name </label>
-                                <input class="form-control" type="text" name="author[name]" id="authorName" required>
-                                <div class="valid-feedback">Looks good!</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="authorBio">Author Bio</label>
-                                <textarea class="form-control" name="author[bio]" id="authorBio" rows="4" required></textarea>
-                                <div class="valid-feedback">Looks good!</div>
-                            </div>
-                        </div>
-
-                        <!-- Additional fields for Admin -->
-                        <div id="adminFields" class="additional-fields" style="display:none;">
-                            <div class="mb-3">
-                                <label class="form-label" for="adminName">Admin Name </label>
-                                <input class="form-control" type="text" name="admin[name]" id="adminName" required>
-                                <div class="valid-feedback">Looks good!</div>
-                            </div>
-                        </div>
-
-                        <!-- Additional fields for Reader -->
-                        <div id="readerFields" class="additional-fields" style="display:none;">
-                            <div class="mb-3">
-                                <label class="form-label" for="readerName">Reader Name </label>
-                                <input class="form-control" type="text" name="reader[name]" id="readerName" required>
-                                <div class="valid-feedback">Looks good!</div>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-success">Register</button>
-                    </form>
-                </div>
+          <% if (locals.error) { %>
+            <div class="alert alert-danger">
+              <%= locals.error %>
             </div>
+          <% } %>
+
+          <form action="/register" method="POST" enctype="multipart/form-data" novalidate class="needs-validation" id="registrationForm">
+            
+            <!-- Row for Username and Role Selection -->
+            <div class="row">
+              <!-- Username input -->
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input type="text" id="username" name="username" class="form-control" placeholder="Username" required />
+                </div>
+              </div>
+
+              <!-- Role Selection -->
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <select class="form-select" id="role" name="role" required onchange="showRoleFields()">
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Author">Author</option>
+                    <option value="Reader">Reader</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
+            </div>
+
+            <!-- Profile Picture input -->
+            <div class="form-outline mb-4">
+              <input type="file" id="profilePicture" name="profilePicture" accept="image/*" class="form-control" required />
+            </div>
+
+            <!-- Additional fields for Author -->
+            <div id="authorFields" style="display: none;">
+              <div class="form-outline mb-4">
+                <input type="text" id="authorName" name="author[name]" class="form-control" placeholder="Author Name" required />
+              </div>
+
+              <div class="form-outline mb-4">
+                <textarea class="form-control" name="author[bio]" id="authorBio" rows="4" placeholder="Author Bio" required></textarea>
+              </div>
+            </div>
+
+            <!-- Additional fields for Admin -->
+            <div id="adminFields" style="display: none;">
+              <div class="form-outline mb-4">
+                <input type="text" id="adminName" name="admin[name]" class="form-control" placeholder="Admin Name" required />
+              </div>
+            </div>
+
+            <!-- Additional fields for Reader -->
+            <div id="readerFields" style="display: none;">
+              <div class="form-outline mb-4">
+                <input type="text" id="readerName" name="reader[name]" class="form-control" placeholder="Reader Name" required />
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+
+            <!-- Already have an account -->
+            <div class="text-center">
+              <p>Already have an account? <a href="/login">Login here</a></p>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
 
 <script>
     function showRoleFields() {
         const role = document.getElementById('role').value;
-        document.getElementById('authorFields').style.display = role === 'Author' ? 'block' : 'none';
-        document.getElementById('adminFields').style.display = role === 'Admin' ? 'block' : 'none';
-        document.getElementById('readerFields').style.display = role === 'Reader' ? 'block' : 'none';
+        const authorFields = document.getElementById('authorFields');
+        const adminFields = document.getElementById('adminFields');
+        const readerFields = document.getElementById('readerFields');
+
+        authorFields.style.display = role === 'Author' ? 'block' : 'none';
+        adminFields.style.display = role === 'Admin' ? 'block' : 'none';
+        readerFields.style.display = role === 'Reader' ? 'block' : 'none';
     }
 </script>
-
-<!-- <script src="/javascripts/validateForm.js"></script> -->

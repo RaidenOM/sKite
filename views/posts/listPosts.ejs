@@ -1,32 +1,91 @@
 <%- layout('layouts/boilerplate') %>
 
-<div class="container px-4 px-lg-5 mt-5">
-    <h2 class="text-center">Posts</h2>
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="text-center">Posts</h2>
 
-    <% if (locals.success) { %>
-        <div class="alert alert-success">
-            <%= locals.success %>
-        </div>
-    <% } %>
-
-    <% if (posts.length === 0) { %>
-        <p class="text-center">No posts available.</p>
-    <% } else { %>
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <% posts.forEach(post => { %>
-                    <div class="post-preview">
-                        <a href="/posts/<%= post._id %>">
-                            <h2 class="post-title"><%= post.title %></h2>
-                            <h3 class="post-subtitle"><%- post.content.substring(0, 100) %>...</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by <%= post.author.name %> on <%= post.createdAt.toDateString() %>
-                        </p>
-                    </div>
-                    <hr class="my-4" />
-                <% }); %>
+        <% if (locals.success) { %>
+            <div class="alert alert-success">
+                <%= locals.success %>
             </div>
-        </div>
-    <% } %>
-</div>
+            <% } %>
+
+            <div class="mb-3">
+                <form id="filter-form" method="GET" action="/posts">
+                    <div class="row gy-3">
+                        <!-- Category Selection -->
+                        <div class="col-md-3">
+                            <select name="category" class="form-select">
+                                <option value="" disabled <%= selectedCategory ? '' : 'selected' %>>Category</option>
+                                <option value="Technology" <%= selectedCategory==='Technology' ? 'selected' : '' %>>Technology</option>
+                                <option value="Lifestyle" <%= selectedCategory==='Lifestyle' ? 'selected' : '' %>>Lifestyle</option>
+                                <option value="Education" <%= selectedCategory==='Education' ? 'selected' : '' %>>Education</option>
+                                <option value="Entertainment" <%= selectedCategory==='Entertainment' ? 'selected' : '' %>>Entertainment</option>
+                                <option value="Travel" <%= selectedCategory==='Travel' ? 'selected' : '' %>>Travel</option>
+                                <option value="Business" <%= selectedCategory==='Business' ? 'selected' : '' %>>Business</option>
+                                <option value="Food" <%= selectedCategory==='Food' ? 'selected' : '' %>>Food</option>
+                                <option value="Gaming" <%= selectedCategory==='Gaming' ? 'selected' : '' %>>Gaming</option>
+                                <option value="Fashion" <%= selectedCategory==='Fashion' ? 'selected' : '' %>>Fashion</option>
+                                <option value="Home and Garden" <%= selectedCategory==='Home and Garden' ? 'selected' : '' %>>Home and Garden</option>
+                                <option value="Other" <%= selectedCategory==='Other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+            
+                        <!-- Sort Selection -->
+                        <div class="col-md-3">
+                            <select name="sort" class="form-select">
+                                <option value="" disabled <%= selectedSort ? '' : 'selected' %>>Sort</option>
+                                <option value="latest" <%= selectedSort === 'latest' ? 'selected' : '' %>>Latest</option>
+                                <option value="oldest" <%= selectedSort === 'oldest' ? 'selected' : '' %>>Oldest</option>
+                                <option value="most_comments" <%= selectedSort === 'most_comments' ? 'selected' : '' %>>Most Comments</option>
+                            </select>
+                        </div>
+            
+                        <!-- Published At Selection -->
+                        <div class="col-md-3">
+                            <select name="publishedAt" class="form-select">
+                                <option value="" disabled <%= selectedPublishedAt ? '' : 'selected' %>>Published</option>
+                                <option value="1" <%= selectedPublishedAt === '1' ? 'selected' : '' %>>Last Month</option>
+                                <option value="2" <%= selectedPublishedAt === '2' ? 'selected' : '' %>>Last 2 Months</option>
+                                <option value="3" <%= selectedPublishedAt === '3' ? 'selected' : '' %>>Last 3 Months</option>
+                                <option value="6" <%= selectedPublishedAt === '6' ? 'selected' : '' %>>Last 6 Months</option>
+                                <option value="12" <%= selectedPublishedAt === '12' ? 'selected' : '' %>>Last Year</option>
+                            </select>
+                        </div>
+            
+                        <!-- Buttons: Apply and Clear -->
+                        <div class="col-md-3 d-flex flex-column flex-md-row justify-content-between">
+                            <button type="submit" class="btn btn-primary btn-sm mb-2 mb-md-0 me-md-2 w-100">Apply</button>
+                            <a href="/posts" class="btn btn-secondary btn-sm w-100 d-flex align-items-center justify-content-center">Clear</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            
+
+                <% if (posts.length===0) { %>
+                    <p class="text-center">No posts available.</p>
+                    <% } else { %>
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <% posts.forEach(post=> { %>
+                                    <div class="post-preview">
+                                        <a href="/posts/<%= post._id %>">
+                                            <h2 class="post-title">
+                                                <%= post.title %>
+                                            </h2>
+                                            <h3 class="post-subtitle"><%- post.content.substring(0, 100) %>...</h3>
+                                        </a>
+                                        <p class="post-meta">
+                                            Posted by <%= post.author.name %> on <%= post.createdAt.toDateString() %>
+                                        </p>
+                                    </div>
+                                    <hr class="my-4" />
+                                    <% }); %>
+                            </div>
+                        </div>
+                        <% } %>
+
+
+                        
+    </div>
