@@ -17,6 +17,10 @@
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>Username:</strong>
+                            <span class="text-muted"><%= userDetails.userId.username %></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>Email:</strong>
                             <span class="text-muted"><%= userDetails.userId.email %></span>
                         </li>
@@ -26,18 +30,14 @@
                                 <strong>Bio:</strong>
                                 <span class="text-muted"><%= userDetails.bio %></span>
                             </li>
-
-                            <% if (userDetails.userId.role === 'Author') { %>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Role:</strong>
-                                    <span class="text-muted"><%= userDetails.userId.role %></span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Posts Count:</strong>
-                                    <span class="text-muted"><%= userDetails.postsCount %></span>
-                                </li>
-                            <% } %>
-
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Role:</strong>
+                                <span class="text-muted"><%= userDetails.userId.role %></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <strong>Posts Count:</strong>
+                                <span class="text-muted"><%= userDetails.postsCount %></span>
+                            </li>
                             <% if (userDetails.genres && userDetails.genres.length > 0) { %>
                                 <li class="list-group-item">
                                     <strong>Genres:</strong>
@@ -55,11 +55,6 @@
                                 <span class="text-muted">You have administrative privileges.</span>
                             </li>
 
-                        <% } else if (userDetails.userId.role === 'Reader') { %>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>Favorite Posts:</strong>
-                                <span class="text-muted">You can save your favorite posts here.</span>
-                            </li>
                         <% } %>
                     </ul>
 
