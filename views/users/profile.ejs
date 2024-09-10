@@ -27,10 +27,16 @@
                                 <span class="text-muted"><%= userDetails.bio %></span>
                             </li>
 
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>Posts Count:</strong>
-                                <span class="text-muted"><%= userDetails.postsCount %></span>
-                            </li>
+                            <% if*(userDetails.userId.role === 'Author') { %>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Role:</strong>
+                                    <span class="text-muted"><%= userDetails.userId.role %></span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Posts Count:</strong>
+                                    <span class="text-muted"><%= userDetails.postsCount %></span>
+                                </li>
+                            <% } %>
 
                             <% if (userDetails.genres && userDetails.genres.length > 0) { %>
                                 <li class="list-group-item">
