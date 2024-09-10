@@ -46,11 +46,9 @@
                     <h6 class="text-uppercase fw-bold">Products</h6>
                     <hr class="mb-4 mt-0 d-inline-block mx-auto"
                         style="width: 60px; background-color: #7c4dff; height: 2px" />
-                    <p><a href="/alumni" class="text-white text-decoration-none">Alumni Network</a></p>
-                    <p><a href="/jobs" class="text-white text-decoration-none">Job Board</a></p>
-                    <p><a href="/events" class="text-white text-decoration-none">Event Management</a></p>
-                    <p><a href="#" class="text-white text-decoration-none">Donation Platform</a></p>
-                    <p><a href="/testimonial" class="text-white text-decoration-none">Testimonials</a></p>
+                    <p><a href="/" class="text-white text-decoration-none">Home</a></p>
+                    <p><a href="/posts" class="text-white text-decoration-none">All Posts</a></p>
+                    <p><a href="/posts/new" class="text-white text-decoration-none">New Post</a></p>
                 </div>
 
                 <!-- Useful links -->
@@ -68,12 +66,12 @@
                     <p>
                         <% if(!currentUser) { %>
                             <a href="/register" class="text-white text-decoration-none">Register</a>
-                        <% }else if(currentUser.role==='staff' ) { %>
-                            <a href="/alumni/new" class="text-white text-decoration-none">Alumni Registration</a>
                         <% } %>
                     </p>
                     <p><a href="#!" class="text-white text-decoration-none">Help Center</a></p>
-                    <p><a href="#!" class="text-white text-decoration-none">Event Calendar</a></p>
+                    <% if(currentUser) { %>
+                        <p><a href="#!" class="text-white text-decoration-none">Logout</a></p>
+                    <% } %>
                 </div>
 
                 <!-- Contact -->
@@ -92,6 +90,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        &copy; <%= new Date().getFullYear() %> sKite. All Rights Reserved.
+        <div class="small text-muted">Copyright &copy; <strong>sKite</strong> 2024</div>
+                    <div class="small text-muted">Designed by <a href="https://github.com/RaidenOM" style="color: white;"><strong>Om Kumar</strong></a></div>
     </div>
 </footer>
