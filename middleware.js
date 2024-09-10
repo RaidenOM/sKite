@@ -10,7 +10,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl
         req.flash('error', 'You must be signed in to complete this action')
-        res.redirect('/login')
+        return res.redirect('/login')
     }
     next()
 }
@@ -29,36 +29,36 @@ module.exports.isAuthorOrAdmin = (req, res, next) => {
 module.exports.isAuthor = (req, res, next) => {
     if (req.user.role !== 'Author') {
         req.flash('error', 'You do not have permissions to do this')
-        res.redirect(req.originalUrl)
+        return res.redirect(req.originalUrl)
     }
     next()
 }
 
 module.exports.isPostOwner = async (req, res, next) => {
     if (req.user.role === 'Admin') {
-        next()
+        return next()
     } else {
         const { id } = req.params
         const post = await Post.findById(id).populate('author')
         if (!post.author.userId.equals(req.user._id)) {
             req.flash('error', 'You do not own this post')
-            res.redirect(`/post/${id}`)
+            return res.redirect(`/post/${id}`)
         }
-        next()
+        return next()
     }
 
 }
 
 module.exports.isCommentOwner = async (req, res, next) => {
-    if (req.user.role === 'Admin') next()
+    if (req.user.role === 'Admin') return next()
     else {
         const { id, commentId } = req.params
         const comment = await Comment.findById(commentId)
         if (!comment.userId.equals(req.user._id)) {
             req.flash('error', 'You do not own this comment')
-            res.redirect(`/posts/${id}`)
+            return res.redirect(`/posts/${id}`)
         }
-        next()
+        return next()
     }
 }
 
