@@ -221,7 +221,12 @@ app.get('/posts', catchAsync(async (req, res) => {
         query = query.sort({ createdAt: -1 }); // Default to latest
     }
 
-    const posts = await query.populate('author');
+    const posts = await query.populate({
+        path: 'author',
+        populate: {
+            path: 'userId'
+        }
+    });
 
     res.render('posts/listPosts', { posts, selectedCategory: category, selectedSort: sort, selectedPublishedAt: publishedAt });
 }));
@@ -361,4 +366,4 @@ app.use((err, req, res, next) => {
     res.status(status).render('error', { err })
 })
 
-module.exports = app;
+module.exports = app
