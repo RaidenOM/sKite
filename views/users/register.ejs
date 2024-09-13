@@ -34,6 +34,7 @@
               <div class="col-md-6 mb-4">
                 <div class="form-outline">
                   <input type="text" id="username" name="username" class="form-control" placeholder="Username" required />
+                  <div class="invalid-feedback">Please a username.</div>
                 </div>
               </div>
 
@@ -46,6 +47,7 @@
                     <option value="Author">Author</option>
                     <option value="Reader">Reader</option>
                   </select>
+                  <div class="invalid-feedback">Please specify your role.</div>
                 </div>
               </div>
             </div>
@@ -53,11 +55,13 @@
             <!-- Email input -->
             <div class="form-outline mb-4">
               <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required />
+              <div class="invalid-feedback">Please enter a valid email.</div>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
               <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
+              <div class="invalid-feedback">Please provide a password.</div>
             </div>
 
             <!-- Profile Picture input -->
@@ -69,10 +73,12 @@
             <div id="authorFields" style="display: none;">
               <div class="form-outline mb-4">
                 <input type="text" id="authorName" name="author[name]" class="form-control" placeholder="Author Name" required />
+                <div class="invalid-feedback">Specify a name for the author.</div>
               </div>
 
               <div class="form-outline mb-4">
                 <textarea class="form-control" name="author[bio]" id="authorBio" rows="4" placeholder="Author Bio" required></textarea>
+                <div class="invalid-feedback">Enter the author's description.</div>
               </div>
             </div>
 
@@ -80,6 +86,7 @@
             <div id="adminFields" style="display: none;">
               <div class="form-outline mb-4">
                 <input type="text" id="adminName" name="admin[name]" class="form-control" placeholder="Admin Name" required />
+                <div class="invalid-feedback">Specify a name for the admin.</div>
               </div>
             </div>
 
@@ -87,6 +94,7 @@
             <div id="readerFields" style="display: none;">
               <div class="form-outline mb-4">
                 <input type="text" id="readerName" name="reader[name]" class="form-control" placeholder="Reader Name" required />
+                <div class="invalid-feedback">Specify a name for the reader.</div>
               </div>
             </div>
 
