@@ -331,7 +331,7 @@ app.delete('/posts/:id', isLoggedIn, isAuthorOrAdmin, isPostOwner, catchAsync(as
 }))
 
 //COMMENTS ROUTES
-app.post('/posts/:id/comments', isLoggedIn, catchAsync(async (req, res) => {
+app.post('/posts/:id/comments', isLoggedIn, validateComment, catchAsync(async (req, res) => {
     const { id } = req.params
     const { comment } = req.body.comment
 
