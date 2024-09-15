@@ -1,6 +1,3 @@
-const Admin = require('./models/admin')
-const Reader = require('./models/reader')
-const Author = require('./models/author')
 const Comment = require('./models/comment')
 const Post = require('./models/post')
 const Joi = require('joi')
